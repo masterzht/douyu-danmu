@@ -31,7 +31,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
 
-	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-web'){
+		exclude module: 'spring-boot-starter-logging'
+	}
+	compile('org.springframework.boot:spring-boot-starter-log4j')
 
 	runtime('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')

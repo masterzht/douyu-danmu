@@ -1,11 +1,13 @@
 package com.zht.dyDanMu.client;
 
+import com.zht.domain.DMRepository;
 import com.zht.dyDanMu.msg.DMessage;
 import com.zht.dyDanMu.msg.MsgView;
 import org.apache.commons.lang3.StringUtils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -222,9 +224,18 @@ public class DMClient
     public static void setText(String text) {
         text = text;
     }
-
+/*存放在关于弹幕信息的表下  */
+//用户名
     private static String name;
+//弹幕内容
     private static String text;
+//弹幕发送者id
+	private static String senderid;
+//弹幕发送者等级
+	private static String senderlevel;
+
+
+
     /**
      * 解析从服务器接受的协议，并根据需要订制业务需求
      * @param msg
@@ -242,16 +253,26 @@ public class DMClient
     		/***@TODO 根据业务需求来处理获取到的所有弹幕及礼物信息***********/					
 			//判断消息类型
 			if(msg.get("type").equals("chatmsg")){//弹幕消息
-				name = msg.toString().substring(msg.toString().indexOf("nn=") + 3, msg.toString().indexOf(","));
-				text = msg.toString().substring(msg.toString().indexOf("txt=") + 4, msg.toString().indexOf(", sahf"));
-//                DMController dmController = new DMController();
+				/*name = msg.toString().substring(msg.toString().indexOf("nn=") + 3, msg.toString().indexOf(","));
+				text = msg.toString().substring(msg.toString().indexOf("txt=") + 4, msg.toString().indexOf(", sahf"));*/
+				name=msg.get("nn").toString();
+				text=msg.get("txt").toString();
+				senderid=msg.get("uid").toString();
+				senderlevel=msg.get("level").toString();
+                /*System.out.println(msg.toString());
+                System.out.println("哈哈");
+				System.out.println(name+text+senderid+senderlevel);*/
+				//                DMController dmController = new DMController();
 //                dmController.danMuAdd(name,text);
 				logger.debug("弹幕消息===>" + msg.toString());
 			}
-			else if(msg.get("type").equals("dgb")){//赠送礼物信息
+			else if(msg.get("type").equals("dgb")){//有人赠送礼物的信息//gs1:鱼丸；gs2:荧光棒；gs5:火箭；gs4办卡
+				System.out.println(msg.toString());
+				System.out.println(msg.get("gs").toString());
+
 				logger.debug("礼物消息===>" + msg.toString());
-			} else {
-				logger.debug("其他消息===>" + msg.toString());
+			} else if(msg.get("type").equals("uenter")){ //有土豪用户进房了，多半有钱
+
 			}
 
 		}

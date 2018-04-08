@@ -3,7 +3,9 @@ package com.zht.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -19,5 +21,12 @@ public class DMController_JSON {
     public String index1(){
         return "方式一:"+msg;
     }
+
+
+    /*@GetMapping(value = "/danmuinfo")
+            public String getMsg(@RequestParam(value="name", defaultValue="World") String name)
+    {
+
+    }*/
 
 }

@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class DanMu {
+public class DanMuInfo {
 
     @Id
     @GeneratedValue
@@ -13,7 +13,7 @@ public class DanMu {
     private String name;
     private String text;
 
-    public DanMu() {
+    public DanMuInfo() {
 
     }
 

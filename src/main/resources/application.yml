@@ -2,7 +2,7 @@ server:
   port: ${port:8080}
 
 msg: 哈哈哈哈哈哈，老子天下第一
-roomId : 3997997
+roomId : 67373
 spring:
   thymeleaf:
     mode: HTML5

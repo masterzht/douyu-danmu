@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class StartFirst implements CommandLineRunner {
 
     //设置需要访问的房间ID信息78622
-    @Value("${roomId:2132902}")
+    @Value("${roomId:643037}")
     private  int roomId;
     //private static final int roomId = 0;
 
