@@ -1,0 +1,17 @@
+server:
+  port: ${port:8080}
+
+msg: 哈哈哈哈哈哈，老子天下第一
+roomId : 3997997
+spring:
+  thymeleaf:
+    mode: HTML5
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://172.18.28.183:3306/test?useSSL=false
+#    username: root
+#    password: 123456...
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: false
