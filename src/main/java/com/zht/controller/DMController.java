@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,29 +18,46 @@ public class DMController {
     private DMRepository dmRepository;
 
     private static String preName = "";
+    private static String preText="";
 
     @GetMapping(value = "/danmu")
     public String highCharts() {
         return "dyDanMu";
     }
 
+    @RequestMapping("/test")
+    public String test(){
+       return "test";
+    }
+
+
     @PostMapping("/add")
     @ResponseBody
     public String danMuAdd() {
         Map<String, String> user = new HashMap<>();
         DanMuInfo danMuInfo = new DanMuInfo();
+
+        String senderid=DMClient.getSenderid();
+        String senderlevel=DMClient.getSenderlevel();
         String userName = DMClient.getName();
         String userText = DMClient.getText();
+
+        danMuInfo.setTime(Calendar.getInstance().getTime());
+        danMuInfo.setSenderid(senderid);
+        danMuInfo.setSenderlevel(senderlevel);
         danMuInfo.setName(userName);
         danMuInfo.setText(userText);
 
+
+
         if(userName == null)
             return null;
-        /*这里的判断有问题*/
-        if (userName.equals(preName)) {
+        /*如果这次获取的姓名和内容都和之前一样，那就取消掉*/
+        if (userName.equals(preName)&&userText.equals(preText)) {
             return null;
         }
         preName = userName;
+        preText=userText;
         dmRepository.save(danMuInfo);
 
 

@@ -6,12 +6,12 @@ roomId : 67373
 spring:
   thymeleaf:
     mode: HTML5
-#  datasource:
-#    driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://172.18.28.183:3306/test?useSSL=false
-#    username: root
-#    password: 123456...
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: false
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://172.18.28.183:3306/douyu?characterEncoding=utf-8&characterSetResults=utf-8&useUnicode=true&useSSL=false
+    username: root
+    password: 123456...
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false

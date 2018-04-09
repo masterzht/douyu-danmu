@@ -224,15 +224,32 @@ public class DMClient
     public static void setText(String text) {
         text = text;
     }
-/*存放在关于弹幕信息的表下  */
-//用户名
-    private static String name;
-//弹幕内容
-    private static String text;
-//弹幕发送者id
+
+
+
+	public static String getSenderid() {
+		return senderid;
+	}
+
+	public static void setSenderid(String senderid) {
+		DMClient.senderid = senderid;
+	}
+
+	public static String getSenderlevel() {
+		return senderlevel;
+	}
+
+	public static void setSenderlevel(String senderlevel) {
+		DMClient.senderlevel = senderlevel;
+	}
+	//弹幕发送者id
 	private static String senderid;
-//弹幕发送者等级
+	//弹幕发送者等级
 	private static String senderlevel;
+	private static String name;
+	//弹幕内容
+	private static String text;
+
 
 
 
@@ -259,6 +276,7 @@ public class DMClient
 				text=msg.get("txt").toString();
 				senderid=msg.get("uid").toString();
 				senderlevel=msg.get("level").toString();
+
                 /*System.out.println(msg.toString());
                 System.out.println("哈哈");
 				System.out.println(name+text+senderid+senderlevel);*/
