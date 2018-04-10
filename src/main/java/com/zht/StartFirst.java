@@ -1,9 +1,9 @@
 package com.zht;
 
 
-import com.zht.dyDanMu.client.DMClient;
-import com.zht.dyDanMu.utils.KeepAlive;
-import com.zht.dyDanMu.utils.KeepGetMsg;
+import com.zht.dydanmu.client.DmClient;
+import com.zht.dydanmu.utils.KeepAlive;
+import com.zht.dydanmu.utils.KeepGetMsg;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -24,7 +24,7 @@ public class StartFirst implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         //初始化弹幕Client
-        DMClient danmuClient = DMClient.getInstance();
+        DmClient danmuClient = DmClient.getInstance();
         //设置需要连接和访问的房间ID，以及弹幕池分组号
         danmuClient.init(roomId, groupId);
 

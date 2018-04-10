@@ -39,4 +39,19 @@ dependencies {
 	runtime('com.h2database:h2')
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
+
+	// 添加  Shiro 依赖
+	compile('org.apache.shiro:shiro-core:1.3.2')
+	compile('org.apache.shiro:shiro-web:1.3.2')
+	compile('org.apache.shiro:shiro-aspectj:1.3.2')
+	compile('org.apache.shiro:shiro-spring:1.3.2')
+
+	// 添加  Thymeleaf Shiro Dialect 依赖
+	compile('com.github.theborakompanioni:thymeleaf-extras-shiro:2.0.0')
+
+	// 添加ehcache缓存库
+	compile group: 'net.sf.ehcache', name: 'ehcache-core', version: '2.4.6'
+
 }

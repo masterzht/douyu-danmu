@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斗鱼弹幕系统</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link
+            href="${request.contextPath}/assets/stylesheets/plugins/common/bootstrap-wysihtml5.css"
+            media="all" rel="stylesheet" type="text/css" />
+    <link
+            href="${request.contextPath}/assets/stylesheets/bootstrap/bootstrap.css"
+            media="all" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            font-family: 'Microsoft Yahei' !important;
+        }
+
+        .bg-login {
+            background-color: #1c77ac !important;
+            background-image: url(${request.contextPath}/assets/images/images/light.png);
+            background-repeat: no-repeat;
+            background-position: center top;
+            overflow: hidden;
+        }
+
+        .login-body {
+            background: url(${request.contextPath}/assets/images/images/loginbg3.png)
+            no-repeat center center;
+            width: 100%;
+            height: 585px;
+            overflow: hidden;
+            position: absolute;
+            top: 47px;
+        }
+
+        .dllogo {
+            /* background: url(${request.contextPath}/assets/images/images/logo.png)
+                no-repeat center; */
+            width: 100%;
+            height: 71px;
+            margin-top: 119px;
+            position: relative;
+
+        }
+
+        .login-box {
+            width: 550px;
+            margin: 15px auto;
+            background: #fff;
+            height: 343px;
+            border: 1px solid #eee;
+            box-shadow: 3px 3px 5px #888888;
+            border-radius: 10px;
+            padding: 10px 100px
+        }
+
+        h3 {
+            font-family: 'Microsoft Yahei' !important;
+            font-size: 22px;
+            font-weight: 400;
+            color: #B16F09;
+            float: left
+        }
+
+        .dlen {
+            margin-top: 22px;
+            position: absolute;
+            margin-left: 10px;
+            font-size: 18px;
+            color: #ccc;
+            float: left
+        }
+
+        @media screen and (max-width:900px) {
+            .login-box {
+                width: 300px;
+                padding: 10px 28px
+            }
+        }
+
+        .cloud{
+            height: 500px;
+            position: absolute;
+            width: 100%;
+
+        }
+
+        .cloud1{
+            background: url(${request.contextPath}/assets/images/images/cloud.png) no-repeat center;
+            position: relative;
+            width: 100%;
+            height: 150px;
+            top:30px;
+
+        }
+        .cloud2{
+            background: url(${request.contextPath}/assets/images/images/cloud.png) no-repeat center;
+            position: relative;
+            width: 100%;
+            height: 150px;
+            top:200px;
+
+        }
+    </style>
+</head>
+
+<body class="bg-login">
+<div class="login-body">
+    <div class="cloud">
+        <div class="cloud1"></div>
+        <div class="cloud2"></div>
+    </div>
+
+    <div class="dllogo"></div>
+    <div class="container" style="position:relative">
+        <div class="login-box">
+            <div class="title">
+                <h3>用户注册</h3>
+                <span class="dlen">UserRegesiter</span>
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div class="controls with-icon-over-input" style="margin-top:15px">
+                <input value="" placeholder="用户名" id="username"
+                       class="form-control" data-rule-required="true" name="user"
+                       type="text" aria-required="true"> <i
+                    class="icon-user text-muted"></i>
+            </div>
+
+            <div class="controls with-icon-over-input" style="margin-top:15px">
+                <input value="" placeholder="真实姓名" id="realname"
+                       class="form-control" data-rule-required="true" name="user"
+                       type="text" aria-required="true"> <i
+                    class="icon-user text-muted"></i>
+            </div>
+
+            <div class="controls with-icon-over-input" style="margin-top:15px">
+                <input value="" placeholder="邮箱" id="email"
+                       class="form-control" data-rule-required="true" name="user"
+                       type="text" aria-required="true"> <i
+                    class="icon-user text-muted"></i>
+            </div>
+
+            <div class="controls with-icon-over-input" style="margin-top:20px">
+                <input value="" placeholder="密码" id="password" class="form-control"
+                       data-rule-required="true" name="email" type="password"
+                       aria-required="true"> <i class="icon-user text-muted"></i>
+            </div>
+
+            <button style="margin-top:20px" class="btn btn-block btn-primary" onclick="regesiter()">注册</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- / jquery [required] -->
+<script
+        src="${request.contextPath}/assets/javascripts/jquery/jquery.min.js"
+        type="text/javascript"></script>
+<!-- / jquery mobile (for touch events) -->
+<script
+        src="${request.contextPath}/assets/javascripts/bootstrap/bootstrap.js"
+        type="text/javascript"></script>
+<!-- / modernizr -->
+<!-- / demo file [not required!] -->
+<script src="${request.contextPath}/assets/javascripts/demo.js"
+        type="text/javascript"></script>
+
+<script>
+    /* 云移动 */
+    cloudmove();
+    cloudmove1();
+    var i=0;
+    var i2=-750;
+    function cloudmove(){
+
+        if(i<1080){
+            $('.cloud1').css('left',i);
+            i++;
+        }
+        else{i=-350;}
+        setTimeout("cloudmove()",100);
+    }
+
+    function cloudmove1(){
+
+        if(i2<1080){
+            $('.cloud2').css('left',i2);
+            i2++;
+        }
+        else{i2=-750;}
+        setTimeout("cloudmove1()",100);
+    }
+    /* 云移动结束 */
+
+
+    function regesiter() {
+        var username = $("#username").val();
+        var realname = $("#realname").val();
+        var email = $("#email").val();
+        var password = $("#password").val();
+        if($.trim(username) == ''||$.trim(password) == ''){alert('用户名或密码不能为空');return}
+        var data = {
+            username : username,
+            realname:realname,
+            email:email,
+            password : password
+        };
+        $.ajax({
+            url : "${request.contextPath}/course/register",
+            type : "post",
+            data : data,
+            success : function(s) {
+                if (s.success) {
+                    alert(s.msg)
+                    location.href = "${request.contextPath}/course/tologin";
+                } else {
+                    alert(s.msg);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

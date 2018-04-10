@@ -1,8 +1,8 @@
 package com.zht.controller;
 import com.google.gson.Gson;
-import com.zht.domain.DMRepository;
-import com.zht.domain.DanMuInfo;
-import com.zht.dyDanMu.client.DMClient;
+import com.zht.entity.DMRepository;
+import com.zht.entity.DanMuInfo;
+import com.zht.dydanmu.client.DmClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +22,12 @@ public class DMController {
 
     @GetMapping(value = "/danmu")
     public String highCharts() {
-        return "dyDanMu";
+        return "dydanmu";
     }
 
-    @RequestMapping("/test")
+    @RequestMapping("/test1")
     public String test(){
-       return "test";
+       return "/login/login";
     }
 
 
@@ -37,10 +37,10 @@ public class DMController {
         Map<String, String> user = new HashMap<>();
         DanMuInfo danMuInfo = new DanMuInfo();
 
-        String senderid=DMClient.getSenderid();
-        String senderlevel=DMClient.getSenderlevel();
-        String userName = DMClient.getName();
-        String userText = DMClient.getText();
+        String senderid= DmClient.getSenderid();
+        String senderlevel= DmClient.getSenderlevel();
+        String userName = DmClient.getName();
+        String userText = DmClient.getText();
 
         danMuInfo.setTime(Calendar.getInstance().getTime());
         danMuInfo.setSenderid(senderid);
@@ -50,8 +50,9 @@ public class DMController {
 
 
 
-        if(userName == null)
+        if(userName == null) {
             return null;
+        }
         /*如果这次获取的姓名和内容都和之前一样，那就取消掉*/
         if (userName.equals(preName)&&userText.equals(preText)) {
             return null;
