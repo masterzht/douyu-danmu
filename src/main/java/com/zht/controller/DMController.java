@@ -2,10 +2,11 @@ package com.zht.controller;
 import com.google.gson.Gson;
 import com.zht.entity.DMRepository;
 import com.zht.entity.DanMuInfo;
-import com.zht.dydanmu.client.DmClient;
+import com.zht.danmu.client.DmClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class DMController {
 
     @GetMapping(value = "/danmu")
     public String highCharts() {
-        return "dydanmu";
+        return "danmu";
     }
 
     @RequestMapping("/test1")
@@ -68,4 +69,8 @@ public class DMController {
         String gsonStr = gson.toJson(user);
         return gsonStr;
     }
+
+
+
+
 }

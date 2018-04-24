@@ -9,6 +9,7 @@ var time;
 var total = 0;
 var number = 0;
 function get(){
+
     $.ajax({
         type: "post",
         url: "/add",
@@ -20,7 +21,7 @@ function get(){
                 userText = userData.text;
                 time = (new Date()).toLocaleTimeString();
                 total++;
-                $("#contentBody").append("<tr align='center'><td>"+total+"</td><td>"+time+"</td><td>"+userName+"</td><td>"+userText+"</td></tr>");
+                $("#contentBody").prepend("<tr align='center'><td>"+total+"</td><td>"+time+"</td><td>"+userName+"</td><td>"+userText+"</td></tr>");
                 number++;
             }
         }
@@ -52,7 +53,7 @@ $('#container').highcharts({
                     series.addPoint([x, y], true, true);
                     activeLastPointToolip(chart);
                     number = 0;
-                }, 5000);
+                }, 2000);
             }
         }
     },

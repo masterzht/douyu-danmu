@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="main" style="width: 600px;height:400px;"></div>
+
+
+<script src="https://cdn.bootcss.com/echarts/2.2.7/echarts-all.js"></script>
+<script type="text/javascript">
+
+
+
+
+
+    var myChart = echarts.init(document.getElementById('main'));
+
+    option = {
+        title : {
+            text: '动态数据',
+            subtext: '纯属虚构'
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['最新成交价', '预购队列']
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        dataZoom : {
+            show : false,
+            start : 0,
+            end : 100
+        },
+        xAxis : [
+            {
+                type : 'category',
+                boundaryGap : true,
+                data : (function (){
+                    var now = new Date();
+                    var res = [];
+                    var len = 10;
+                    while (len--) {
+                        res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                        now = new Date(now - 2000);
+                    }
+                    return res;
+                })()
+            },
+            {
+                type : 'category',
+                boundaryGap : true,
+                data : (function (){
+                    var res = [];
+                    var len = 10;
+                    while (len--) {
+                        res.push(len + 1);
+                    }
+                    return res;
+                })()
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value',
+                scale: true,
+                name : '价格',
+                boundaryGap: [0.2, 0.2]
+            },
+            {
+                type : 'value',
+                scale: true,
+                name : '预购量',
+                boundaryGap: [0.2, 0.2]
+            }
+        ],
+        series : [
+            {
+                name:'预购队列',
+                type:'bar',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                data:(function (){
+                    var res = [];
+                    var len = 10;
+                    while (len--) {
+                        res.push(Math.round(Math.random() * 1000));
+                    }
+                    return res;
+                })()
+            },
+            {
+                name:'最新成交价',
+                type:'line',
+                data:(function (){
+                    var res = [];
+                    var len = 10;
+                    while (len--) {
+                        res.push((Math.random()*10 + 5).toFixed(1) - 0);
+                    }
+                    return res;
+                })()
+            }
+        ]
+    };
+
+    myChart.setOption(option);
+    var lastData = 11;
+    var axisData;
+    var timeTicket;
+    clearInterval(timeTicket);
+    timeTicket = setInterval(function (){
+        lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+        lastData = lastData.toFixed(1) - 0;
+        axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+
+        // 动态数据接口 addData
+        myChart.addData([
+            [
+                0,        // 系列索引
+                Math.round(Math.random() * 1000), // 新增数据
+                true,     // 新增数据是否从队列头部插入
+                false     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+            ],
+            [
+                1,        // 系列索引
+                lastData, // 新增数据
+                false,    // 新增数据是否从队列头部插入
+                false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+                axisData  // 坐标轴标签
+            ]
+        ]);
+
+        //myChart.setOption(option);
+
+    }, 2100);
+
+
+    /*    // 显示标题，图例和空的坐标轴
+     option={s
+     title : {
+     text: '斗鱼房间分析',
+     subtext: '房间号：'
+     },
+     tooltip : {
+     trigger: 'axis'
+     },
+     legend: {
+     data:['在线热度值', '直播间关注数']
+     },
+     toolbox: {
+     show : true,
+     feature : {
+     mark : {show: true},
+     dataView : {show: true, readOnly: false},
+     magicType : {show: true, type: ['line', 'bar']},
+     restore : {show: true},
+     saveAsImage : {show: true}
+     }
+     },
+     dataZoom : {
+     show : false,
+     start : 0,
+     end : 100
+     },
+     /!*坐标轴显示内容*!/
+     xAxis : [
+     {
+     type : 'category',
+     boundaryGap : true,
+     data : (function (){
+     var now = new Date();
+     var res = [];
+     var len = 10;
+     while (len--) {
+     res.unshift(now.toLocaleTimeString().replace(/^\D*!/,''));
+     now = new Date(now - 2000);
+     }
+     return res;
+     })()
+     },
+
+     {
+     type : 'category',
+     boundaryGap : true,
+     data : (function (){
+     var res = [];
+     var len = 10;
+     while (len--) {
+     res.push(len + 1);
+     }
+     return res;
+     })()
+     }
+     ],
+     /!*y轴的左右两边显示*!/
+     yAxis : [
+     {
+     type : 'value',
+     scale: true,
+     name : '热度',
+     boundaryGap: [0.2, 0.2]
+     },
+     {
+     type : 'value',
+     scale: true,
+     name : '关注数',
+     boundaryGap: [0.2, 0.2]
+     }
+     ],
+     /!*我们填充的数据就是在这里*!/
+     series : [
+     {
+     name:'直播间关注数',
+     type:'bar',
+     xAxisIndex: 1,
+     yAxisIndex: 1,
+     data:(function (){
+     var res = [];
+     var len = 10;
+     while (len--) {
+     //res.push(Math.round(Math.random() * 1000));
+     res.push(7);
+     }
+     return res;
+     })()
+     },
+     {
+     name:'在线热度值',
+     type:'line',
+     data:(function (){
+     var res = [];
+     var len = 10;
+     while (len--) {
+     //                        res.push((Math.random()*10 + 5).toFixed(1) - 0);
+     res.push(5);
+
+     }
+     return res;
+     })()
+     }
+     ]
+     }
+     //myChart.setOption(option);
+
+     //myChart.showLoading();    //数据加载完之前先显示一段简单的loading动画
+
+
+
+
+
+
+
+     setInterval(function () {
+     for (var i = 0; i < 5; i++) {
+     //data.shift();
+     data.push(randomData());
+     }
+     //data.push(randomData());
+     myChart.setOption(option);
+     }, 1000);
+
+
+
+
+
+     /!*通过ajax获取数据*!/
+     //房间热度值
+     var hn;
+     //关注数
+     var fans_num;
+     //定义一个时间数组
+     var now ;
+     setInterval(
+     function hh(){
+     $.ajax({
+     type: "get",
+     url: "/douyu-api",
+     data: {},
+     datatype: "json",
+     success: function (result) { //请求成功：result为后台返回数据
+     if (result!= null) {
+
+     hn=result.data.hn;
+     fans_num=result.data.owner_weight;
+     myChart.setOption(option);
+     now=(new Date()).toLocaleTimeString();
+     return {
+     name: now.toString(),
+     value: [
+     [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+     Math.round(value)
+     ]
+     }
+
+     }else{
+     System.out.print(1234213);
+     }
+     }
+     ,
+     error: function () { //请求失败
+     alert("Error");
+     }
+     });
+     },3000);
+
+     var lastData = 11;
+     var axisData;
+     clearInterval(timeTicket);
+     timeTicket = setInterval(function (){
+     lastData += Math.random() * ((Math.round(Math.random() * 10) % 2) == 0 ? 1 : -1);
+     lastData = lastData.toFixed(1) - 0;
+     axisData = (new Date()).toLocaleTimeString().replace(/^\D*!/,'');
+
+     // 动态数据接口 addData
+     myChart.addData([
+     [
+     0,        // 系列索引
+     Math.round(Math.random() * 1000), // 新增数据
+     true,     // 新增数据是否从队列头部插入
+     false     // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+     ],
+     [
+     1,        // 系列索引
+     lastData, // 新增数据
+     false,    // 新增数据是否从队列头部插入
+     false,    // 是否增加队列长度，false则自定删除原有数据，队头插入删队尾，队尾插入删队头
+     axisData  // 坐标轴标签
+     ]
+     ]);
+     }, 2100);*/
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -53,5 +53,8 @@ dependencies {
 
 	// 添加ehcache缓存库
 	compile group: 'net.sf.ehcache', name: 'ehcache-core', version: '2.4.6'
+//添加retrofit
+	implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+	compile 'com.squareup.retrofit2:converter-gson:2.4.0'
 
 }
