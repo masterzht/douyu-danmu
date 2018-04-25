@@ -1,13 +1,15 @@
 package com.zht.controller;
 
 
-import com.zht.entity.shiro.UserRepository;
 
+
+import com.zht.service.impl.DanmuServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -15,8 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  */
 @Controller
 public class DMTest {
-    @Autowired
-    UserRepository userRepository;
+
 
     @GetMapping(value = "/test")
     public String test(){
@@ -39,7 +40,10 @@ public class DMTest {
     }
 
     @GetMapping(value="/sayhello")
-    public String greetingSubmit( Model model) {
+    public String greetingSubmit(@RequestParam("search") Integer search,Model model) {
+        System.out.println(search);
+        DanmuServiceImpl.start(search);
+        model.addAttribute("search",search);
         return "test";
     }
 

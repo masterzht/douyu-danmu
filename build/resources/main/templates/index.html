@@ -21,7 +21,7 @@
 		<form  th:action="@{/sayhello}"  method="get">
             <div class="search-wrapper">
                 <div class="input-holder">
-                    <input type="text" class="search-input" placeholder="输入您要搜索的斗鱼房间号" />
+                    <input name="search" id="search-input" type="text" class="search-input" placeholder="输入您要搜索的斗鱼房间号" />
                     <button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
                 </div>
                 <span class="close" onclick="searchToggle(this, event);"></span>
@@ -36,6 +36,8 @@
 	<script type="text/javascript">
         function searchToggle(obj, evt){
             var container = $(obj).closest('.search-wrapper');
+			
+			 
 
             if(!container.hasClass('active')){
                   container.addClass('active');
@@ -48,6 +50,8 @@
                   // clear and hide result container when we press close
                   container.find('.result-container').fadeOut(100, function(){$(this).empty();});
             }
+			
+			var result1 = $("#search-input").val(); 
         }
 
 

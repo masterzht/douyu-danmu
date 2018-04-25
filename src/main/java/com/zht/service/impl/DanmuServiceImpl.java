@@ -1,29 +1,22 @@
-/*
-package com.zht;
-
+package com.zht.service.impl;
 
 import com.zht.danmu.client.DmClient;
 import com.zht.danmu.utils.KeepAlive;
 import com.zht.danmu.utils.KeepGetMsg;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
-@Component
-@Order(1)
-public class StartFirst implements CommandLineRunner {
+/**
+ * Created by masterzht on 2018/4/25.
+ */
+public class DanmuServiceImpl {
 
-    //设置需要访问的房间ID信息78622
-    @Value("${roomId:643037}")
-    private  int roomId;
-    //private static final int roomId = 0;
+    //设置需要访问的房间ID信息
+    //private static final int roomId = 301712;
 
     //弹幕池分组号，海量模式使用-9999
     private static final int groupId = -9999;
 
-    @Override
-    public void run(String... strings) throws Exception {
+    public static void start(int roomId)
+    {
         //初始化弹幕Client
         DmClient danmuClient = DmClient.getInstance();
         //设置需要连接和访问的房间ID，以及弹幕池分组号
@@ -38,4 +31,3 @@ public class StartFirst implements CommandLineRunner {
         keepGetMsg.start();
     }
 }
-*/
