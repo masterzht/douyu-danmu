@@ -27,7 +27,7 @@ public class StartBarrageServiceImpl implements IStartBarrage {
         danmuClient.init(roomId, groupId);
 
         //保持弹幕服务器心跳
-        KeepAlive keepAlive = new KeepAlive();
+        KeepAlive keepAlive = new KeepAlive(roomId);
         keepAlive.start();
 
         //获取弹幕服务器发送的所有信息

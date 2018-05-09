@@ -2,10 +2,13 @@ package com.zht.danmu.client;
 
 import com.zht.danmu.msg.DMessage;
 import com.zht.danmu.msg.MsgView;
+import com.zht.service.impl.DanmuServiceImpl;
+import com.zht.service.impl.StartBarrageServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -19,6 +22,9 @@ import java.util.Map;
  */
 public class DmClient
 {
+	@Autowired
+	private StartBarrageServiceImpl startBarrageService;
+
 	Logger logger = LogManager.getLogger(DmClient.class);
 	private static DmClient instance;
 	
@@ -155,7 +161,7 @@ public class DmClient
     /**
      * 服务器心跳连接
      */
-    public void keepAlive()
+    public void keepAlive(int roomId)
     {
     	//获取与弹幕服务器保持心跳的请求数据包
         byte[] keepAliveRequest = DMessage.getKeepAliveData((int)(System.currentTimeMillis() / 1000));
@@ -167,6 +173,11 @@ public class DmClient
             logger.debug("Send keep alive request successfully!");
             
     	} catch(Exception e){
+        	//异常的话就重新开始连接弹幕
+			//初始化弹幕Client
+			DmClient danmuClient = DmClient.getInstance();
+			//设置需要连接和访问的房间ID，以及弹幕池分组号
+			danmuClient.init(roomId, -9999);
     		e.printStackTrace();
     		logger.error("Send keep alive request failed!");
     	}
@@ -174,6 +185,7 @@ public class DmClient
 
     /**
      * 获取服务器返回信息
+	 * 如果网断了，获取信息会失败，所以要在异常处理里面重新发起请求
      */
     public void getServerMsg(){
     	//初始化获取弹幕服务器返回信息包大小

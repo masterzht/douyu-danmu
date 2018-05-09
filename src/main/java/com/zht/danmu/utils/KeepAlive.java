@@ -4,6 +4,12 @@ import com.zht.danmu.client.DmClient;
 
 public class KeepAlive extends Thread {
 
+    private int roomId;
+
+    public KeepAlive(int roomId){
+        this.roomId=roomId;
+    }
+
     @Override
     public void run()
     {
@@ -14,7 +20,7 @@ public class KeepAlive extends Thread {
         while(danmuClient.getReadyFlag())
         {
         	//发送心跳保持协议给服务器端
-        	danmuClient.keepAlive();
+        	danmuClient.keepAlive(roomId);
             try
             {
             	//设置间隔45秒再发送心跳协议
