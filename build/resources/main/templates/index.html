@@ -18,10 +18,11 @@
 		</div>
 	</header>
 	<section class="htmleaf-container">
-		<form  th:action="@{/sayhello}"  method="get">
+		<form id="submit"  th:action="@{/search}"  method="get">
             <div class="search-wrapper">
                 <div class="input-holder">
-                    <input name="search" id="search-input" type="text" class="search-input" placeholder="输入您要搜索的斗鱼房间号" />
+					<!--这个roomid和controller要匹配好-->
+                    <input name="roomid" id="search-input" type="text" class="search-input" placeholder="输入您要搜索的斗鱼房间号" />
                     <button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
                 </div>
                 <span class="close" onclick="searchToggle(this, event);"></span>
@@ -35,9 +36,8 @@
 	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript">
         function searchToggle(obj, evt){
+
             var container = $(obj).closest('.search-wrapper');
-			
-			 
 
             if(!container.hasClass('active')){
                   container.addClass('active');
@@ -50,8 +50,9 @@
                   // clear and hide result container when we press close
                   container.find('.result-container').fadeOut(100, function(){$(this).empty();});
             }
-			
-			var result1 = $("#search-input").val(); 
+
+			var result1 = $("#search-input").val();
+            
         }
 
 

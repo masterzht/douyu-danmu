@@ -1,33 +1,57 @@
 package com.zht.service.impl;
 
 import com.zht.danmu.client.DmClient;
-import com.zht.danmu.utils.KeepAlive;
-import com.zht.danmu.utils.KeepGetMsg;
+import com.zht.dao.entity.DanmuInfo;
+import com.zht.dao.repository.DanmuRepository;
+import com.zht.service.IDanmu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Calendar;
 
 /**
- * Created by masterzht on 2018/4/25.
+ * Created by masterzht on 2018/5/9.
  */
-public class DanmuServiceImpl {
+@Service
+public class DanmuServiceImpl implements IDanmu {
+    @Autowired
+    private DanmuRepository danmuRepository;
 
-    //设置需要访问的房间ID信息
-    //private static final int roomId = 301712;
+    private static String preName = "";
+    private static String preText="";
 
-    //弹幕池分组号，海量模式使用-9999
-    private static final int groupId = -9999;
+    @Override
+    public DanmuInfo searchBarrage() {
+        DanmuInfo danmuInfo = new DanmuInfo();
 
-    public static void start(int roomId)
-    {
-        //初始化弹幕Client
-        DmClient danmuClient = DmClient.getInstance();
-        //设置需要连接和访问的房间ID，以及弹幕池分组号
-        danmuClient.init(roomId, groupId);
+        /*获取弹幕，存储到danmuInfo类*/
+        String senderid= DmClient.getSenderid();
+        String senderlevel= DmClient.getSenderlevel();
+        String userName = DmClient.getName();
+        String userText = DmClient.getText();
 
-        //保持弹幕服务器心跳
-        KeepAlive keepAlive = new KeepAlive();
-        keepAlive.start();
+        /*如果这次获取的姓名和内容都和之前一样，或者username为null那就取消掉*/
+        if(userName == null) {
+            return null;
+        }else if (userName.equals(preName)&&userText.equals(preText)) {
+            return null;
+        }
+        preName = userName;
+        preText=userText;
 
-        //获取弹幕服务器发送的所有信息
-        KeepGetMsg keepGetMsg = new KeepGetMsg();
-        keepGetMsg.start();
+        danmuInfo.setTime(Calendar.getInstance().getTime());
+        danmuInfo.setSenderid(senderid);
+        danmuInfo.setSenderlevel(senderlevel);
+        danmuInfo.setName(userName);
+        danmuInfo.setText(userText);
+        return danmuInfo;
+    }
+
+    @Override
+    public void saveBarrage(DanmuInfo danmuInfo) {
+
+        if(danmuInfo!=null){
+            danmuRepository.save(danmuInfo);
+        }
     }
 }
