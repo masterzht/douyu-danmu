@@ -10,8 +10,7 @@ public interface IDouyuApi {
 
 
     /*返回直播间的json文件*/
-    public RoomInfBean getcontent();
+    public RoomInfBean getcontent(int roomid);
 
-    /*返回直播间开播状态*/
-    public String room_status();
+
 }

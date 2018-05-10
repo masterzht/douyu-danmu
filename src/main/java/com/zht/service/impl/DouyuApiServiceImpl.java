@@ -16,14 +16,17 @@ import java.io.IOException;
  */
 @Service
 public class DouyuApiServiceImpl implements IDouyuApi {
+
+
+
     @Override
-    public RoomInfBean getcontent() {
+    public RoomInfBean getcontent(int roomid) {
         Retrofit retrofit = new Retrofit.Builder().
                 baseUrl(DouYuApi.url).
                 addConverterFactory(GsonConverterFactory.create()).
                 build();
         DouYuApi douyuapi=retrofit.create(DouYuApi.class);
-        Call<RoomInfBean> call=douyuapi.getZhihuDetail(643037);
+        Call<RoomInfBean> call=douyuapi.getZhihuDetail(roomid);
         try {
             Response<RoomInfBean> res=call.execute();
             return res.body();
@@ -33,10 +36,7 @@ public class DouyuApiServiceImpl implements IDouyuApi {
         return null;
     }
 
-    @Override
-    public String room_status() {
-        return getcontent().getData().getRoom_status();
-    }
+
 
 
 }

@@ -1,7 +1,9 @@
 package com.zht.controller;
 
 import com.zht.dao.entity.DanmuInfo;
+import com.zht.model.douyuapi.RoomInfBean;
 import com.zht.service.impl.DanmuServiceImpl;
+import com.zht.service.impl.DouyuApiServiceImpl;
 import com.zht.service.impl.StartBarrageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,9 @@ public class DouyuController {
 
     @Autowired
     private DanmuServiceImpl danmuService;
+
+    @Autowired
+    private DouyuApiServiceImpl douyuApiService;
 
 
     /**
@@ -37,7 +42,8 @@ public class DouyuController {
      */
     @GetMapping(value="/search")
     public String searchRoomId(@RequestParam("roomid") Integer roomid, Model model) {
-        System.out.println(roomid);
+        RoomInfBean roomInfBean=douyuApiService.getcontent(roomid);
+        model.addAttribute("roominfo",roomInfBean);
         /*启动弹幕查询*/
         startBarrage.start(roomid);
         model.addAttribute("roomid",roomid);
@@ -53,6 +59,8 @@ public class DouyuController {
     @GetMapping("/{roomid}")
     public String getRoom(@PathVariable("roomid")  Integer roomid, Model model){
         startBarrage.start(roomid);
+       RoomInfBean roomInfBean=douyuApiService.getcontent(roomid);
+       model.addAttribute("roominfo",roomInfBean);
         model.addAttribute("roomid",roomid);
         return "analysis";
     }
@@ -81,6 +89,12 @@ public class DouyuController {
         DanmuInfo danmuInfo = danmuService.searchBarrage();
         danmuService.saveBarrage(danmuInfo);
         return danmuInfo;
+    }
+
+
+    @GetMapping("/test")
+    public String hh(){
+        return "test";
     }
 
 
