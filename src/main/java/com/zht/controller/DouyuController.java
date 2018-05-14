@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by masterzht on 2018/5/9.
  */
@@ -92,10 +95,10 @@ public class DouyuController {
     }
 
 
-    @GetMapping("/test")
-    public String hh(){
-        return "test";
-    }
+
+
+
+
 
 
 }

@@ -6,8 +6,22 @@ wyait:
   picpath : F:\cache\java\douyu
 
 
+spring:
+    kaptcha:
+        enable: true
+        properties:
+          kaptcha.border: no
+          kaptcha.border.color: 105,179,90
+          kaptcha.textproducer.font.color: blue
+          kaptcha.image.width: "125"
+          kaptcha.image.height: "45"
+          kaptcha.textproducer.font.size: "45"
+          kaptcha.session.key: KAPTCHA_SESSION_KEY
+          kaptcha.textproducer.char.length: "4"
+          kaptcha.textproducer.font.names: 宋体,楷体,微软雅黑
+        suffix: suffix
 
-msg: 哈哈哈哈哈哈，老子天下第一
+
 roomId : 67373
 spring:
   resources:
