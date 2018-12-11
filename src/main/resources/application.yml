@@ -35,6 +35,11 @@ spring:
 #    url: jdbc:mysql://172.18.28.183:3366/douyu?characterEncoding=utf-8&characterSetResults=utf-8&useUnicode=true&useSSL=false
 #    username: root
 #    password: 123456...
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3366/douyu?characterEncoding=utf-8&characterSetResults=utf-8&useUnicode=true&useSSL=false
+    username: root
+    password: 123456
   jpa:
     hibernate:
       ddl-auto: update

@@ -12,16 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by masterzht on 2018/4/8.
  */
 @RestController
-public class DMController_JSON {
+public class DouyuApiController {
 
     @Autowired
     public DouyuApiServiceImpl douyuService;
-
-
-
-
-
-
 
 
 

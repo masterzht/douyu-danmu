@@ -17,8 +17,6 @@ import java.io.IOException;
 @Service
 public class DouyuApiServiceImpl implements IDouyuApi {
 
-
-
     @Override
     public RoomInfBean getcontent(int roomid) {
         Retrofit retrofit = new Retrofit.Builder().
@@ -35,8 +33,4 @@ public class DouyuApiServiceImpl implements IDouyuApi {
         }
         return null;
     }
-
-
-
-
 }

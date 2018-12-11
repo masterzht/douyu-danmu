@@ -50,12 +50,13 @@
                   // clear and hide result container when we press close
                   container.find('.result-container').fadeOut(100, function(){$(this).empty();});
             }
-
 			var result1 = $("#search-input").val();
 
+            if(result1==""){
+               evt.preventDefault();
+            }
+
         }
-
-
     </script>
 </body>
 </html>

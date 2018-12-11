@@ -58,7 +58,7 @@ $('#container').highcharts({
         }
     },
     title: {
-        text: '五秒弹幕量'
+        text: '实时弹幕量'
     },
     xAxis: {
         type: 'datetime',
