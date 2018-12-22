@@ -37,13 +37,18 @@ spring:
 #    password: 123456...
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3366/douyu?characterEncoding=utf-8&characterSetResults=utf-8&useUnicode=true&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3366/douyu?characterEncoding=utf8&character_set_server=utf8mb4&useUnicode=true&useSSL=false
     username: root
     password: 123456
+    tomcat:
+        initSQL: SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
+    #读多写少用myisam，反之用innodb
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   mvc:
 #  表示所有的访问都经过静态资源路径
     static-path-pattern: /**

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <meta http-equiv="Content-type" name="viewport"
+          content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="keywords" content="斗鱼">
+    <meta name="description" content="斗鱼">
+    <title>斗鱼</title>
+    <link rel="stylesheet" th:href="@{/css/recommend/style.css}"/>
+    <style type="text/css" abt="234"></style>
+    <script>//console.log('a')
+
+    doAdblock();
+    function doAdblock(){
+    (function () {
+        function A() {
+        }
+
+        A.prototype = {
+            rules: {
+                '17173_in': {
+                    'find': /http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace': "http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out': {
+                    'find': /http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace': "http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live': {
+                    'find': /http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace': "http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out': {
+                    'find': /http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace': "http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if (!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function () {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function (e) {
+                if (e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function (elem) {
+                if (this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if (!player) return;
+                var i, find, replace = false;
+                for (i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if (find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if ('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        } else {
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function (elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function (elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if (nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function () {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+    }
+    //去除一些广告
+    //remove baidu search ad
+    if (document.URL.indexOf('www.baidu.com') >= 0) {
+        if (document && document.getElementsByTagName && document.getElementById && document.body) {
+            var aa = function () {
+                var all = document.body.querySelectorAll("#content_left div,#content_left table");
+                for (var i = 0; i < all.length; i++) {
+                    if (/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))) {
+                        all[i].style.display = "none";
+                        all[i].style.visibility = 'hidden';
+                    }
+                }
+                all = document.body.querySelectorAll('.result.c-container[id="1"]');
+                //if(all.length == 1) return;
+                for (var i = 0; i < all.length; i++) {
+                    if (all[i].innerHTML && all[i].innerHTML.indexOf('广告') > -1) {
+                        all[i].style.display = "none";
+                        all[i].style.visibility = 'hidden';
+                    }
+                }
+            }
+            aa();
+            document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified', aa)
+        }
+        ;
+    }
+    //remove sohu video ad
+    if (document.URL.indexOf("tv.sohu.com") >= 0) {
+        if (document.cookie.indexOf("fee_status=true") == -1) {
+            document.cookie = 'fee_status=true'
+        }
+        ;
+    }
+    //remove 56.com video ad
+    if (document.URL.indexOf("56.com") >= 0) {
+        if (document.cookie.indexOf("fee_status=true") == -1) {
+            document.cookie = 'fee_status=true'
+        }
+        ;
+    }
+    //fore iqiyi enable html5 player function
+    if (document.URL.indexOf("iqiyi.com") >= 0) {
+        if (document.cookie.indexOf("player_forcedType=h5_VOD") == -1) {
+            document.cookie = 'player_forcedType=h5_VOD'
+            if (localStorage.reloadTime && Date.now() - parseInt(localStorage.reloadTime) < 60000) {
+                console.log('no reload')
+            } else {
+                location.reload()
+                localStorage.reloadTime = Date.now();
+            }
+        }
+    }
+    </script>
+    <style type="text/css">object, embed {
+        -webkit-animation-duration: .001s;
+        -webkit-animation-name: playerInserted;
+        -ms-animation-duration: .001s;
+        -ms-animation-name: playerInserted;
+        -o-animation-duration: .001s;
+        -o-animation-name: playerInserted;
+        animation-duration: .001s;
+        animation-name: playerInserted;
+    }
+
+    @-webkit-keyframes playerInserted {
+        from {
+            opacity: 0.99;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @-ms-keyframes playerInserted {
+        from {
+            opacity: 0.99;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @-o-keyframes playerInserted {
+        from {
+            opacity: 0.99;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes playerInserted {
+        from {
+            opacity: 0.99;
+        }
+        to {
+            opacity: 1;
+        }
+    }</style>
+</head>
+<body>
+<script type="text/javascript" th:src="@{/js/recommend/config.js}"></script>
+<div id="nav" class="navbar">
+    <div class="wrap">
+        <div>提示:呵呵</div>
+        <div class="logo"><a href="#">
+            <script>document.write(domain);</script>
+            斗鱼呀</a></div>
+        <div id="nav_menu">
+            <div class="nav-right">
+                <ul class="mt">
+                    <li id="mt_home"  ontouchstart=""><i
+                            class="icon-home"></i><span>首页</span></li>
+                    <li id="mt_menu" onclick="show_menu();"><i id="mt_menu_icon" class="icon-menu"></i><span>菜单</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="menu" class="menu">
+    <div class="wrap">
+        <dl class="first">
+            <dt><a href="http://haoseqi1.com/video/">网游竞技</a></dt>
+            <dd><a href="http://haoseqi1.com/video/menshijian/">英雄联盟</a></dd>
+            <dd><a href="http://haoseqi1.com/video/zhuboyanwu/">DOTA2</a></dd>
+            <dd><a href="http://haoseqi1.com/video/toupaizipai/">穿越火线</a></dd>
+            <dd><a href="http://haoseqi1.com/video/zwzp/">魔兽世界</a></dd>
+            <dd><a href="http://haoseqi1.com/video/sanjidianying/">XXXX</a></dd>
+        </dl>
+        <dl>
+            <dt><a href="http://haoseqi1.com/dianying/">单机热游</a></dt>
+            <dd><a href="http://haoseqi1.com/dianying/wuma/">绝地求生</a></dd>
+            <dd><a href="http://haoseqi1.com/dianying/oumeixingai/">主机游戏</a></dd>
+            <dd><a href="http://haoseqi1.com/dianying/meituizhifu/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/dianying/shaofurenqi/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/dianying/qunjiaolinglei/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/dianying/youma/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/dianying/dongmankatong/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/dianying/zhongwenzimu/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/dianying/a%20pian/">XXXX</a></dd>
+        </dl>
+        <dl>
+            <dt><a href="http://haoseqi1.com/tupian/">娱乐天地</a></dt>
+            <dd><a href="http://haoseqi1.com/tupian/yazhoutupian/">二次元</a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/oumeisetu/">星娱</a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/wangyouzipai/">户外</a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/meituisiwa/">美食</a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/qingchunweimei/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/dongmankatong/">XXXX</a></dd>
+        </dl>
+        <dl>
+            <dt><a href="http://haoseqi1.com/xiaoshuo/">合集</a></dt>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jiqingwenxue/">颜值</a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/">音乐</a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/xywx/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/yzwm/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/ymjp/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/omjq/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/sjxz/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/zpdp/">XXXX</a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/hjxz/">XXXX</a></dd>
+        </dl>
+    </div>
+</div>
+<div id="top_spon">
+    <div class="top-spon">
+        <div class="wrap">
+            <ul></ul>
+        </div>
+    </div>
+</div>
+<div id="movie_list" class="movie-list">
+    <div class="wrap">
+        <div class="list-title"><h3>最新电影</h3></div>
+        <ul>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4879-0-0.html" target="_blank"><img
+                    src="http://mm.chinasareview.com/wp-content/uploads/2017a/06/12/01.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545190110.jpg"
+                    alt="Kick Azz A Hardcore Comixxx Parody XXX DVDRip XviD CD3"
+                    style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Kick Azz A Hardcore Comixxx Parody XXX DVDRip XviD CD3</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4878-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545190110.jpg"
+                    data-original="http://mm.chinasareview.com/wp-content/uploads/2017a/06/12/01.jpg"
+                    alt="Kick Azz A Hardcore Comixxx Parody XXX DVDRip XviD CD2"
+                    style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Kick Azz A Hardcore Comixxx Parody XXX DVDRip XviD CD2</h2><i>2018-12-21</i>
+                <div class="play"></div>
+            </a></li>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4877-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545190110.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545190110.jpg"
+                    alt="Kick Azz A Hardcore Comixxx Parody XXX DVDRip XviD CD1"
+                    style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Kick Azz A Hardcore Comixxx Parody XXX DVDRip XviD CD1</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4876-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545189729.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545189729.jpg"
+                    alt="Xena XXX Parody XXX DVDRip XviD CD1" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Xena XXX Parody XXX DVDRip XviD CD1</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4875-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545189436.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545189436.jpg"
+                    alt="Speed XXX DVDRip XviD CD1" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Speed XXX DVDRip XviD CD1</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4874-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545189436.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545189436.jpg"
+                    alt="Speed XXX DVDRip XviD CD2" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Speed XXX DVDRip XviD CD2</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4873-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545189267.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545189267.jpg"
+                    alt="Back Room Milf 13 XXX DVD XviD CD1" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Back Room Milf 13 XXX DVD XviD CD1</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4872-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545189267.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545189267.jpg"
+                    alt="Back Room Milf 13 XXX DVD XviD CD2" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Back Room Milf 13 XXX DVD XviD CD2</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4871-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545189729.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545189729.jpg"
+                    alt="Xena XXX Parody XXX DVDRip XviD CD2" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Xena XXX Parody XXX DVDRip XviD CD2</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/oumeixingai/player4870-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545189931.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545189931.jpg"
+                    alt="Dirty Masseur 7 Ass Parade 24 XXX DVDRip XviD" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>Dirty Masseur 7 Ass Parade 24 XXX DVDRip XviD</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/youma/player4869-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545190622.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545190622.jpg"
+                    alt="【JUX-156】 おじさん、私と不倫して下さい…。 横山夏希" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【JUX-156】 おじさん、私と不倫して下さい…。 横山夏希</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/youma/player4868-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545190724.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545190724.jpg"
+                    alt="【JUX-160】 濃密セックス3本番SP！！あなたへ 今晩、ようこの家に泊まります。 瞳リョウ"
+                    style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【JUX-160】 濃密セックス3本番SP！！あなたへ 今晩、ようこの家に泊まります。 瞳リョウ</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/youma/player4867-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545190837.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545190837.jpg"
+                    alt="【JUX-161】 歴代専属女優 豪華共演！！美熟女教師だらけの童貞男子校 – 小森愛｜牧原れい子｜秋野千尋｜青山葵"
+                    style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【JUX-161】 歴代専属女優 豪華共演！！美熟女教師だらけの童貞男子校 – 小森愛｜牧原れい子｜秋野千尋｜青山葵</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/youma/player4866-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545190996.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545190996.jpg"
+                    alt="【JUX-164】 息子の嫁 羽生稀" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【JUX-164】 息子の嫁 羽生稀</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/youma/player4865-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545191228.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545191228.jpg"
+                    alt="【JUX-168】 私、本当は犯されたいんです。 長谷川美紅" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【JUX-168】 私、本当は犯されたいんです。 長谷川美紅</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/youma/player4864-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545191332.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545191332.jpg"
+                    alt="【JUX-176】 隣家の嫁 鶴田かな" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【JUX-176】 隣家の嫁 鶴田かな</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/youma/player4863-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545191493.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545191493.jpg"
+                    alt="【JUX-177】 夫よりも義父を愛して…。 知花メイサ" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【JUX-177】 夫よりも義父を愛して…。 知花メイサ</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/youma/player4862-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545192026.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545192026.jpg"
+                    alt="【JUX-178】 息子の為にアナルを犯された母 ～苦悶に打ち震える処女菊門～ 高嶋碧" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【JUX-178】 息子の為にアナルを犯された母 ～苦悶に打ち震える処女菊門～ 高嶋碧</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/wuma/player4861-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545192728.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545192728.jpg"
+                    alt="【DSAM-72】 夢を叶えまSHOW  北条麻妃" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【DSAM-72】 夢を叶えまSHOW 北条麻妃</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/wuma/player4860-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545192478.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545192478.jpg"
+                    alt="【DSAM-66】 未来のアイドルゴルファーは君だ！  伊澄知世" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【DSAM-66】 未来のアイドルゴルファーは君だ！ 伊澄知世</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/wuma/player4859-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545192635.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545192635.jpg"
+                    alt="【DSAM-67】 MARICA in ヨーロッパ – 男を調教して野外生ハメ  まりか ジーナ"
+                    style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【DSAM-67】 MARICA in ヨーロッパ – 男を調教して野外生ハメ まりか ジーナ</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/wuma/player4858-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545192820.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545192820.jpg"
+                    alt="【DSAM-73】 美少女ファイル ~無垢な乙女の敏感ボディ~  椎名みゆ" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【DSAM-73】 美少女ファイル ~無垢な乙女の敏感ボディ~ 椎名みゆ</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/wuma/player4857-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545192932.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545192932.jpg"
+                    alt="【DSAM-74】 美微乳感度チェック ~マジでおっぱいでイっちゃうの！~  桜井レイラ" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【DSAM-74】 美微乳感度チェック ~マジでおっぱいでイっちゃうの！~ 桜井レイラ</h2><i>2018-12-21</i></a></li>
+            <li><a href="http://haoseqi1.com/dianying/wuma/player4856-0-0.html" target="_blank"><img
+                    src="./好色妻_files/201812191545193058.jpg"
+                    data-original="http://pic.ywggzpt.com/upload/vod/2018-12-19/201812191545193058.jpg"
+                    alt="【DSAM-75】 他人妻味 madame ~フェロモン全開の挑発ボディ~  美智子小夜曲" style="transition: all 1s ease 0s; opacity: 1;">
+                <h2>【DSAM-75】 他人妻味 madame ~フェロモン全開の挑発ボディ~ 美智子小夜曲</h2><i>2018-12-21</i></a></li>
+        </ul>
+    </div>
+</div>
+<div id="text_list" class="text-list">
+    <div class="wrap">
+        <dl class="list-left">
+            <dt class="list-title"><h3>最新图片</h3></dt>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009275642791.html"
+                   target="_blank"><em>01</em><span>12-20</span>
+                <h2>约了个大学生，穿着网袜给我舔</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009275542790.html"
+                   target="_blank"><em>02</em><span>12-20</span>
+                <h2>漂流瓶遇到的骚熟妇 各种器具自慰插逼</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009275442789.html"
+                   target="_blank"><em>03</em><span>12-20</span>
+                <h2>口活不错的妹妹</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009275342788.html"
+                   target="_blank"><em>04</em><span>12-20</span>
+                <h2>微信遇少妇自拍露B</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009275142787.html"
+                   target="_blank"><em>05</em><span>12-20</span>
+                <h2>遮住小三的眼睛草她的逼</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009275042786.html"
+                   target="_blank"><em>06</em><span>12-20</span>
+                <h2>搞了一个丝袜熟妇 逼都被我干翻了</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009274742785.html"
+                   target="_blank"><em>07</em><span>12-20</span>
+                <h2>后入了一个细腰肥臀的骚少妇 爽死了</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009274442784.html"
+                   target="_blank"><em>08</em><span>12-20</span>
+                <h2>真的好猛呦～高潮了干到快要不行了骚穴一直到都处于兴奋状态</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009274342783.html"
+                   target="_blank"><em>09</em><span>12-20</span>
+                <h2>很会玩的叔叔阿姨，超难度姿势爽歪歪</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/tupian/tongxinglinglei/2018122009272042782.html"
+                   target="_blank"><em>10</em><span>12-20</span>
+                <h2>大学生女友身材好，活好水多不粘人</h2></a></dd>
+        </dl>
+        <dl class="list-right">
+            <dt class="list-title"><h3>最新小说</h3></dt>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009383143069.html" target="_blank"><em>01</em><span>12-20</span>
+                <h2>孝顺的儿子 三崎笙子、三崎健一</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009383043068.html" target="_blank"><em>02</em><span>12-20</span>
+                <h2>我爱上自己的姐姐</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009382743067.html" target="_blank"><em>03</em><span>12-20</span>
+                <h2>孝顺的儿子 城田美穗、城田薰</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009382643066.html" target="_blank"><em>04</em><span>12-20</span>
+                <h2>处女之路</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009382443065.html" target="_blank"><em>05</em><span>12-20</span>
+                <h2>【和表妹不断抽插的一夜】</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009382143064.html" target="_blank"
+                   se_prerender_url="complete"><em>06</em><span>12-20</span>
+                <h2>我和婶的一些事</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009381843063.html" target="_blank"><em>07</em><span>12-20</span>
+                <h2>我与姐姐的乱伦</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009381743062.html" target="_blank"><em>08</em><span>12-20</span>
+                <h2>孝顺的儿媳</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009381543061.html" target="_blank"><em>09</em><span>12-20</span>
+                <h2>和姐夫做爱</h2></a></dd>
+            <dd><a href="http://haoseqi1.com/xiaoshuo/jtll/2018122009381443060.html" target="_blank"><em>10</em><span>12-20</span>
+                <h2>【客车上勾搭上的熟妇让我又爱又怕】</h2></a></dd>
+        </dl>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/js/recommend/layout.js}"></script>
+<div id="bottom_spon">
+    <div class="bottom-spon">
+        <div class="wrap">
+            <ul></ul>
+        </div>
+    </div>
+</div>
+<div id="float_spon"></div>
+
+<div id="guide" class="wrap" style="display: none;">
+    <div class="guide">
+        <span class="pc"><a href="#" class="home" title="回首页"><span>回首页</span></a><a href="javascript:void(0)"
+                                                                                     onclick="gotop();" class="top"
+                                                                                     title="回顶部"><span>回顶部</span></a></span>
+        <span class="mt"><a href="#" title="回首页" ontouchstart=""><i class="icon-home2"></i></a><a
+                href="javascript:window.location.reload();" title="刷新" ontouchstart=""><i
+                class="icon-refresh"></i></a><a href="javascript:void(0)" id="btnGotop" onclick="gotop();"
+                                                title="回顶部"><i class="icon-top"></i></a></span>
+    </div>
+</div>
+
+
+</body>
+</html>

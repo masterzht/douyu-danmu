@@ -15,6 +15,6 @@ public interface DouYuApi {
     String   url = "http://open.douyucdn.cn/api/";
 
     @GET("RoomApi/room/{roomid}")
-    Call<RoomInfBean> getZhihuDetail(@Path("roomid") Integer roomid) ;
+    Call<RoomInfBean> getRoomDetail(@Path("roomid") Integer roomid) ;
 
 }

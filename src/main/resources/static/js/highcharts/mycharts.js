@@ -10,6 +10,7 @@ var total = 0;
 var number = 0;
 function get(){
 
+
     $.ajax({
         type: "post",
         url: "/addbarrage",

@@ -24,12 +24,12 @@ public class DouyuApiServiceImpl implements IDouyuApi {
                 addConverterFactory(GsonConverterFactory.create()).
                 build();
         DouYuApi douyuapi=retrofit.create(DouYuApi.class);
-        Call<RoomInfBean> call=douyuapi.getZhihuDetail(roomid);
+        Call<RoomInfBean> call=douyuapi.getRoomDetail(roomid);
         try {
             Response<RoomInfBean> res=call.execute();
             return res.body();
         } catch (IOException e) {
-            e.printStackTrace();  //会堵塞主线程，因为是同步请求
+            e.printStackTrace();  //会堵塞主线程，因为是同步请求，其实无所谓的
         }
         return null;
     }
