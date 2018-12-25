@@ -9,10 +9,6 @@ document.writeln('		<span class="mt"><a href="#" title="回首页" ontouchstart=
 document.writeln('<div id="maskDiv" class="maskDiv" style="display:none;"></div>');
 
 
-
-
-
-
 function getId(idName) {
 	return document.getElementById(idName);
 }
@@ -46,7 +42,9 @@ if(getId('movie_list')!=null){
 	var posterImages = getId('movie_list').getElementsByTagName('img');
 	loadImg(posterImages);
 	addEvent(window,'scroll',function(){
-		loadImg(posterImages);
+
+		/*不知道上面原因，去掉了之后下拉就正常了*/
+		//loaodImg(posterImages);
 	});
 	function loadImg(arr){
 		for (var i = 0, len = arr.length; i < len; i++) {
@@ -54,10 +52,11 @@ if(getId('movie_list')!=null){
 				arr[i].isLoad = true;
 				arr[i].style.cssText = 'transition: 0; opacity: 0;';
 				if(arr[i].dataset){
-				aftLoadImg(arr[i],arr[i].dataset.original);  
+				aftLoadImg(arr[i],arr[i].dataset.original);
+
 			}else{
-				aftLoadImg(arr[i],arr[i].getAttribute('data-original'));
-			}
+                    aftLoadImg(arr[i],arr[i].getAttribute('data-original'));
+                }
 			(function(i){
 				setTimeout(function(){
 					arr[i].style.cssText = 'transition: 1s; opacity: 1;';

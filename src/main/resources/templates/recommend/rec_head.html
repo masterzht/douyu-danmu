@@ -12,6 +12,9 @@
     <style type="text/css" abt="234"></style>
 
     <script type="text/javascript" th:src="@{/js/common/jquery-3.2.1.min.js}"></script>
+
+
+
     <script>//console.log('a')
 
     doAdblock();
@@ -217,7 +220,7 @@
 
 </head>
 <body>
-<script type="text/javascript" th:src="@{/js/recommend/config.js}"></script>
+
 <div id="nav" class="navbar">
     <div class="wrap">
         <div class="logo"><a href="/">
@@ -242,12 +245,19 @@
             <dd><a href="/category/DOTA2">DOTA2</a></dd>
             <dd><a href="/category/CF">穿越火线</a></dd>
             <dd><a href="/category/WOW">魔兽世界</a></dd>
+            <dd><a href="/category/DNF">DNF</a></dd>
+            <dd><a href="/category/MC">我的世界</a></dd>
+
 
         </dl>
         <dl>
             <dt><a href="/category/Overwatch">单机热游</a></dt>
             <dd><a href="/category/jdqs">绝地求生</a></dd>
-            <dd><a href="/category/TVgame">主机游戏</a></dd>
+            <dd><a href="/category/hyrz">火影忍者</a></dd>
+            <dd><a href="/category/LRSZQ">狼人杀专区</a></dd>
+            <dd><a href="/category/classic">怀旧游戏</a></dd>
+           <!--
+            <dd><a href="/category/gwlrsj">怪物猎人</a></dd>-->
 
         </dl>
         <dl>
@@ -262,6 +272,7 @@
             <dt><a href="/category/lsqy">合集</a></dt>
             <dd><a href="/category/yz">颜值</a></dd>
             <dd><a href="/category/music">音乐</a></dd>
+            <dd><a href="/category/TVgame">主机游戏</a></dd>
 
         </dl>
     </div>
@@ -276,6 +287,7 @@
 <!--复制三种方法的区别,学习一下https://blog.csdn.net/liyanlei5858/article/details/80183409-->
 <!--核查了个遍,发现一个问题,用include的话一下拉就刷新烦死了,现在终于解决了-->
 <div th:replace="recommend/rec_body::copy">
+    <script type="text/javascript" th:src="@{/js/recommend/config.js}"></script>
 
 </div>
 
@@ -302,7 +314,7 @@
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/js/douyuapi/myutil.js}"></script>
+
 <!--基本上涉及了thymeleaf的所有操作-->
 <script th:inline="javascript">
     /*改分类名*/
@@ -341,7 +353,23 @@
         $("#category_name").text("娱乐天地");
     }else if (category_name=="lsqy") {
         $("#category_name").text("合集");
+    }else if (category_name=="TencentGame") {
+        $("#category_name").text("腾讯游戏");
+    }else if (category_name=="DNF") {
+        $("#category_name").text("DNF");
+    }else if (category_name=="hyrz") {
+        $("#category_name").text("火影忍者");
+    }else if (category_name=="LRSZQ") {
+        $("#category_name").text("狼人杀专区");
+    }else if (category_name=="classic") {
+        $("#category_name").text("怀旧游戏");
+    }else if (category_name=="MC") {
+        $("#category_name").text("我的世界");
+    }else if (category_name=="gwlrsj") {
+        $("#category_name").text("怪物猎人");
     }
+
+
 
 </script>
 </body>
