@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by masterzht on 2018/4/8.
- *
+ *以后再弄，应该也没有以后了。。。
  * 作api用
  */
 @RestController
@@ -19,9 +19,5 @@ public class DouyuApiController {
 
     @Autowired
     public DouyuApiServiceImpl douyuService;
-
-
-
-
 
 }

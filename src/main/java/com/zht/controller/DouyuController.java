@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 public class DouyuController {
+    /*那头应该有@service了，所以轻松注入进来*/
     @Autowired
     private StartBarrageServiceImpl startBarrage;
 
@@ -32,7 +33,7 @@ public class DouyuController {
     @GetMapping(value = "/")
     public String index(Model model) {
         model.addAttribute("short_name", "all");
-        return "/recommend/rec_head";
+        return "recommend/rec_head";
     }
 
     @GetMapping(value = "/s")
@@ -49,11 +50,12 @@ public class DouyuController {
      */
     @GetMapping(value = "/search")
     public String searchRoomId(@RequestParam("roomid") Integer roomid, Model model) {
+
         RoomInfBean roomInfBean = douyuApiService.getcontent(roomid);
         model.addAttribute("roominfo", roomInfBean);
+        model.addAttribute("roomid", roomid);
         /*开启弹幕服务器，启动弹幕查询*/
         startBarrage.start(roomid);
-        model.addAttribute("roomid", roomid);
         return "analysis";
     }
 
@@ -88,10 +90,8 @@ public class DouyuController {
     }
 
 
-
-
     /**
-     * 添加弹幕
+     * 添加弹幕，这句有bug，如果多个弹幕请求出现的话，会出现杂糅
      *
      * @return
      */

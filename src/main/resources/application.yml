@@ -23,7 +23,17 @@ spring:
 
 
 roomId : 67373
+#--------------------------Server--------------------------
+server:
+  tomcat:
+    uri-encoding: UTF-8
+#--------------------------charset--------------------------
 spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
   resources:
     static-locations: /META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${wyait.picpath}
   thymeleaf:
@@ -52,3 +62,6 @@ spring:
   mvc:
 #  表示所有的访问都经过静态资源路径
     static-path-pattern: /**
+
+
+

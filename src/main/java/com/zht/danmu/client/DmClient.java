@@ -102,7 +102,6 @@ public class DmClient {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         logger.debug("Server Connect Successfully!");
     }
 

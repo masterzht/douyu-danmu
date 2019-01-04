@@ -20,7 +20,7 @@ public class DouyuRecControler {
     @GetMapping("/{short_name}")
     public String getRoom(@PathVariable("short_name") String short_name, Model model) {
         model.addAttribute("short_name", short_name);
-        return "/recommend/rec_head";
+        return "recommend/rec_head";
     }
 
 }

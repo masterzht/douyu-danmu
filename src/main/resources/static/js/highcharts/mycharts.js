@@ -11,8 +11,6 @@ var number = 0;
 
 
 function get() {
-
-
     $.ajax({
         type: "post",
         url: "/addbarrage",
@@ -177,6 +175,5 @@ $("#but1").click(function () {
         clearInterval(t1);
         $("#but1").text('弹幕飞起');
     }
-
 
 });
