@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class DouyuController {
     /*那头应该有@service了，所以轻松注入进来*/
+    /*其实写的不规范。。控制反转要基于接口编程，所以下面应该用IStartBarrage，以后再说吧*/
     @Autowired
     private StartBarrageServiceImpl startBarrage;
 
