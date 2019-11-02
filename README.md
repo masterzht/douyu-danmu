@@ -23,6 +23,11 @@
 
 下面分成三部分简单分析一下整个项目，具体实现可以看代码，有详细的解释。
 1. 导航界面
-![image](https://github.com/AngelSXD/sxd_first_repository/blob/master/images/20160615165142.png)
+
+基本实现了前后端分离，后端的api使用nginx反向代理，请求解析api使用了retrofit。
+
+![image](https://github.com/masterzht/douyu-danmu/blob/master/screenshots/1.jpg)
+
+![image](https://github.com/masterzht/douyu-danmu/blob/master/screenshots/2.jpg)
 
 
