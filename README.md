@@ -30,4 +30,13 @@
 
 ![image](https://github.com/masterzht/douyu-danmu/blob/master/screenshots/2.jpg)
 
+2. 弹幕数据化显示
+
+使用了highcharts，简单统计弹幕量
+
+![image](https://github.com/masterzht/douyu-danmu/blob/master/screenshots/3.jpg)
+
+3.弹幕插件Jquery.barrager.js
+
+![image](https://github.com/masterzht/douyu-danmu/blob/master/screenshots/4.jpg)
 
