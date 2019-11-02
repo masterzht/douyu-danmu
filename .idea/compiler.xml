@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="douyudanmu.main" target="1.8" />
+      <module name="douyudanmu.test" target="1.8" />
       <module name="douyudanmu_main" target="1.8" />
       <module name="douyudanmu_test" target="1.8" />
     </bytecodeTargetLevel>

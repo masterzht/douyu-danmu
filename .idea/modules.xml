@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/douyudanmu.iml" filepath="$PROJECT_DIR$/.idea/modules/douyudanmu.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/douyudanmu_main.iml" filepath="$PROJECT_DIR$/.idea/modules/douyudanmu_main.iml" group="douyudanmu" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/douyudanmu_test.iml" filepath="$PROJECT_DIR$/.idea/modules/douyudanmu_test.iml" group="douyudanmu" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/douyudanmu.main.iml" filepath="$PROJECT_DIR$/.idea/modules/douyudanmu.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/douyudanmu.test.iml" filepath="$PROJECT_DIR$/.idea/modules/douyudanmu.test.iml" />
     </modules>
   </component>
 </project>
